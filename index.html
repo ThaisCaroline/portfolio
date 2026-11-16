@@ -156,6 +156,23 @@
     .premio .capa { object-fit:cover; }
     .foto-premio { display:block; max-width:100%; max-height:70vh; margin:0 auto; border-radius:14px; border:1px solid var(--linha); }
 
+    /* ===== imagem ampliada ===== */
+    dialog .tiras img, dialog .foto-premio { cursor:zoom-in; }
+    #lightbox { width:100vw; height:100vh; max-width:none; max-height:none; border:0; border-radius:0; padding:0; overflow:hidden; background:rgba(3,6,10,.95); }
+    #lightbox .lb-wrap { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:64px 72px; }
+    #lightbox #lb-img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:10px; }
+    .lb-btn { position:absolute; z-index:2; cursor:pointer; font-family:var(--titulo); font-weight:800; color:var(--texto); background:#111a28; border:1px solid var(--linha); border-radius:999px; }
+    .lb-btn:hover { border-color:var(--laranja); color:var(--laranja); }
+    .lb-fechar { top:16px; right:16px; font-size:1rem; letter-spacing:.1em; text-transform:uppercase; padding:6px 16px; }
+    .lb-ant, .lb-prox { top:50%; transform:translateY(-50%); width:48px; height:48px; font-size:1.8rem; line-height:1; }
+    .lb-ant { left:16px; } .lb-prox { right:16px; }
+    #lightbox.unica .lb-ant, #lightbox.unica .lb-prox { display:none; }
+    .lb-cont { position:absolute; bottom:16px; left:0; right:0; text-align:center; margin:0; }
+    @media (max-width:700px) {
+      #lightbox .lb-wrap { padding:60px 12px 44px; }
+      .lb-ant, .lb-prox { top:auto; bottom:12px; transform:none; }
+    }
+
     /* ===== seletor de idioma ===== */
     .idioma { display:flex; gap:2px; padding:3px; border:1px solid var(--linha); border-radius:999px; background:#0b121c; }
     .idioma button { font-family:var(--titulo); font-weight:800; font-size:.95rem; letter-spacing:.1em; cursor:pointer; color:var(--suave);
@@ -527,6 +544,14 @@
     </div>
   </dialog>
 
+  <dialog id="lightbox" aria-label="Imagem ampliada">
+    <button class="lb-btn lb-fechar" type="button" data-fechar>Fechar ✕</button>
+    <button class="lb-btn lb-ant" type="button" id="lb-ant" aria-label="Imagem anterior">‹</button>
+    <div class="lb-wrap"><img id="lb-img" alt=""></div>
+    <button class="lb-btn lb-prox" type="button" id="lb-prox" aria-label="Próxima imagem">›</button>
+    <p class="dica lb-cont" id="lb-cont"></p>
+  </dialog>
+
   <script>
     // filtros
     var filtros = document.querySelectorAll('.filtro');
@@ -553,6 +578,38 @@
     document.querySelectorAll('dialog').forEach(function (d) {
       d.querySelector('[data-fechar]').addEventListener('click', function () { d.close(); });
       d.addEventListener('click', function (e) { if (e.target === d) d.close(); }); // clique fora fecha
+    });
+
+    // ===== imagem ampliada: clique numa imagem dentro de um painel =====
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lb-img');
+    var lbCont = document.getElementById('lb-cont');
+    var galeria = [], galeriaIdx = 0;
+    function mostrarImagem(i) {
+      galeriaIdx = (i + galeria.length) % galeria.length;
+      var im = galeria[galeriaIdx];
+      lbImg.src = im.currentSrc || im.src;
+      lbImg.alt = im.alt;
+      lbCont.textContent = galeria.length > 1 ? (galeriaIdx + 1) + ' / ' + galeria.length : '';
+      lb.classList.toggle('unica', galeria.length < 2);
+    }
+    document.addEventListener('click', function (e) {
+      var im = e.target.closest && e.target.closest('dialog:not(#lightbox) img');
+      if (!im) return;
+      var tira = im.closest('.tiras');
+      galeria = tira ? Array.prototype.slice.call(tira.querySelectorAll('img')) : [im];
+      mostrarImagem(galeria.indexOf(im));
+      lb.showModal();
+    });
+    document.getElementById('lb-ant').addEventListener('click', function () { mostrarImagem(galeriaIdx - 1); });
+    document.getElementById('lb-prox').addEventListener('click', function () { mostrarImagem(galeriaIdx + 1); });
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb || e.target.classList.contains('lb-wrap')) lb.close(); // clique fora da imagem fecha
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.open || galeria.length < 2) return;
+      if (e.key === 'ArrowLeft') mostrarImagem(galeriaIdx - 1);
+      if (e.key === 'ArrowRight') mostrarImagem(galeriaIdx + 1);
     });
 
     // ===== idioma (PT / EN) =====
@@ -642,6 +699,7 @@
         `The program keeps everything in one place, builds the prompts I use to generate the images and narration with AI (Gemini) and puts the result together in a finished vertical video (1080×1920), with voice, subtitles and images, or even video clips that I upload myself. That way I don't have to repeat the same explanations in every scene or lose the thread of the story between chapters.`,
       'É o meu projeto caçula, ainda em desenvolvimento, e ganha novos recursos conforme eu o uso e aprendo.': `It is my youngest project, still in development, and it gains new features as I use it and learn.`,
       'Como funciona': `How it works`,
+      'Imagem ampliada': `Enlarged image`, 'Imagem anterior': `Previous image`, 'Próxima imagem': `Next image`,
       'Projeto': `Project`, 'Personagens e ambientes': `Characters and settings`, 'Cenas': `Scenes`, 'Imagem + voz': `Image + voice`, 'Vídeo MP4': `MP4 video`,
       'Imagens de referência enviadas junto com o prompt, para manter a aparência dos personagens': `Reference images sent with the prompt, to keep the characters' look consistent`,
       'Geração em lote por capítulo e visualização do prompt enviado': `Batch generation per chapter and a view of the prompt that was sent`,
