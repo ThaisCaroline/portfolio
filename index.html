@@ -204,6 +204,12 @@
       .marca { display:none; }
     }
 
+    /* ===== cartão do Trailhead (preenchido pela GitHub Action; escondido enquanto estiver vazio) ===== */
+    .trailhead { margin-top:20px; }
+    .trailhead:not(:has(img)) { display:none; }
+    .trailhead img { max-width:100%; height:auto; display:block; border-radius:12px; }
+    .trailhead a { display:block; }
+
     /* ===== contato ===== */
     .contato { padding:24px 26px; }
     .contato p { margin:0 0 18px; color:#c6cfdb; }
@@ -408,6 +414,12 @@
           </div>
         </div>
       </section>
+
+      <div class="bloco trailhead">
+        <h3>Trailhead</h3>
+        <!--TH_Stats:start-->
+        <!--TH_Stats:end-->
+      </div>
 
       <section class="secao" id="contato">
         <h2>Contato</h2>

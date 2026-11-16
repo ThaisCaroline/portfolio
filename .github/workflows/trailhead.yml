@@ -1,0 +1,29 @@
+# Atualiza o cartão do Trailhead no site. Só roda quando você pedir:
+# GitHub > aba Actions > "Atualizar Trailhead" > Run workflow
+name: Atualizar Trailhead
+
+on:
+  workflow_dispatch:
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Trailhead Stats
+        uses: nabondance/trailhead-stats@v2
+        with:
+          trailhead-username: 'tsouza35'
+          display-file: 'index.html'
+          file-format: 'html'
+          display-type: 'card'
+          card-path: 'img/trailhead'
+          dark-style: 'dark'
+          show-certification: 'detail'
+          show-badge: 'number'
+          show-superbadge: 'icon'
+          show-event-badge: 'hidden'
+          show-stamp: 'hidden'
