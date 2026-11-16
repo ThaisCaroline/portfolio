@@ -156,6 +156,14 @@
     .premio .capa { object-fit:cover; }
     .foto-premio { display:block; max-width:100%; max-height:70vh; margin:0 auto; border-radius:14px; border:1px solid var(--linha); }
 
+    /* ===== contato ===== */
+    .contato { padding:24px 26px; }
+    .contato p { margin:0 0 18px; color:#c6cfdb; }
+    .email-linha { display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin:0 0 20px; }
+    .email-texto { font-family:var(--titulo); font-weight:700; font-size:1.8rem; letter-spacing:.04em; color:var(--texto); word-break:break-all; user-select:all; }
+    #copiar-email { font-size:1rem; padding:10px 22px; }
+    .secao { scroll-margin-top:90px; }
+
     /* ===== formação ===== */
     .secao { margin-top:72px; }
     .secao h2 { font-family:var(--titulo); font-weight:800; text-transform:uppercase; font-size:2.2rem; letter-spacing:.04em; margin:0 0 24px; }
@@ -189,7 +197,7 @@
       <a href="#projetos">Projetos</a>
       <a href="#premiacoes">Premiações</a>
       <a href="#formacao">Formação</a>
-      <a href="mailto:thaiscaroline450@gmail.com">Contato</a>
+      <a href="#contato">Contato</a>
     </nav>
   </header>
 
@@ -208,7 +216,7 @@
         um jogo que você pode jogar aqui na página.
       </p>
       <div class="acoes">
-        <a class="botao" href="mailto:thaiscaroline450@gmail.com">Contato</a>
+        <a class="botao" href="#contato">Contato</a>
         <div class="links">
           <a href="https://www.linkedin.com/in/thaiscarolyne01/" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://www.salesforce.com/trailblazer/tsouza35" target="_blank" rel="noopener">Trailhead</a>
@@ -338,6 +346,21 @@
               <li>Um estudo sobre a contratação de serviços de tecnologia da informação pela administração pública federal</li>
               <li>A percepção dos alunos do ensino médio sobre os cursos de graduação na área de TI</li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="secao" id="contato">
+        <h2>Contato</h2>
+        <div class="bloco contato">
+          <p>Vamos conversar? Me escreva por e-mail ou me encontre nas redes.</p>
+          <div class="email-linha">
+            <span class="email-texto" id="email-texto">thaiscaroline450@gmail.com</span>
+            <button class="botao" id="copiar-email" type="button">Copiar e-mail</button>
+          </div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/thaiscarolyne01/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.salesforce.com/trailblazer/tsouza35" target="_blank" rel="noopener">Trailhead</a>
           </div>
         </div>
       </section>
@@ -509,6 +532,25 @@
     document.querySelectorAll('dialog').forEach(function (d) {
       d.querySelector('[data-fechar]').addEventListener('click', function () { d.close(); });
       d.addEventListener('click', function (e) { if (e.target === d) d.close(); }); // clique fora fecha
+    });
+
+    // copiar e-mail
+    var btnEmail = document.getElementById('copiar-email');
+    btnEmail.addEventListener('click', function () {
+      var texto = document.getElementById('email-texto').textContent;
+      function ok() {
+        btnEmail.textContent = 'Copiado!';
+        setTimeout(function () { btnEmail.textContent = 'Copiar e-mail'; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(ok, function () {
+          var r = document.createRange(); r.selectNodeContents(document.getElementById('email-texto'));
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        });
+      } else {
+        var r = document.createRange(); r.selectNodeContents(document.getElementById('email-texto'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      }
     });
 
     // jogo: só carrega ao clicar em "Jogar"; ao fechar o painel, descarrega (para o som)
