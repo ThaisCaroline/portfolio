@@ -164,6 +164,17 @@
     .premio .capa { object-fit:cover; }
     .foto-premio { display:block; max-width:100%; max-height:70vh; margin:0 auto; border-radius:14px; border:1px solid var(--linha); }
 
+    /* ===== brilho que segue o mouse (só com mouse; desligado em celular e com "menos movimento") ===== */
+    #brilho { position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0; transition:opacity .35s;
+              --mx:50vw; --my:30vh;
+              background:radial-gradient(460px circle at var(--mx) var(--my), rgba(255,138,0,.13), transparent 70%); }
+    #brilho::after { content:""; position:absolute; inset:0;
+              background-image:linear-gradient(rgba(255,138,0,.30) 1px, transparent 1px), linear-gradient(90deg, rgba(255,138,0,.30) 1px, transparent 1px);
+              background-size:44px 44px;
+              -webkit-mask-image:radial-gradient(280px circle at var(--mx) var(--my), #000, transparent 70%);
+              mask-image:radial-gradient(280px circle at var(--mx) var(--my), #000, transparent 70%); }
+    @media (hover:none), (prefers-reduced-motion:reduce) { #brilho { display:none; } }
+
     /* ===== imagem ampliada ===== */
     dialog .tiras img, dialog .foto-premio { cursor:zoom-in; }
     #lightbox { width:100vw; height:100vh; max-width:none; max-height:none; border:0; border-radius:0; padding:0; overflow:hidden; background:rgba(3,6,10,.95); }
@@ -228,6 +239,7 @@
   </style>
 </head>
 <body>
+  <div id="brilho" aria-hidden="true"></div>
   <header class="cabecalho">
     <a class="marca" href="#topo">TC</a>
     <nav>
@@ -873,6 +885,25 @@
       frame.removeAttribute('src');
       jogo.classList.remove('ativo');
     });
+
+    // brilho que segue o mouse
+    (function () {
+      var b = document.getElementById('brilho');
+      if (!b || !window.matchMedia || !matchMedia('(hover:hover) and (pointer:fine)').matches
+          || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+      var x = 0, y = 0, agendado = false;
+      document.addEventListener('pointermove', function (e) {
+        x = e.clientX; y = e.clientY; b.style.opacity = 1;
+        if (agendado) return;
+        agendado = true;
+        requestAnimationFrame(function () {
+          b.style.setProperty('--mx', x + 'px');
+          b.style.setProperty('--my', y + 'px');
+          agendado = false;
+        });
+      });
+      document.documentElement.addEventListener('mouseleave', function () { b.style.opacity = 0; });
+    })();
 
     // idioma inicial: escolha salva > idioma do navegador (português = PT, qualquer outro = EN)
     var idiomaSalvo = null;
