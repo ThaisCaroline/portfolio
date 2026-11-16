@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thaís Souza | Software Engineer</title>
+  <title>Thaís Carolyne | Software Engineer</title>
   <meta name="description" content="Software Engineer em Manaus. Dados, automação e apps.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta property="og:title" content="Thaís Souza | Software Engineer">
+  <meta property="og:title" content="Thaís Carolyne | Software Engineer">
   <meta property="og:description" content="Dados, automação e apps. Projetos: CuidadoPet, Hollow City e Estúdio de Histórias.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#070b12">
@@ -156,6 +156,18 @@
     .premio .capa { object-fit:cover; }
     .foto-premio { display:block; max-width:100%; max-height:70vh; margin:0 auto; border-radius:14px; border:1px solid var(--linha); }
 
+    /* ===== seletor de idioma ===== */
+    .idioma { display:flex; gap:2px; padding:3px; border:1px solid var(--linha); border-radius:999px; background:#0b121c; }
+    .idioma button { font-family:var(--titulo); font-weight:800; font-size:.95rem; letter-spacing:.1em; cursor:pointer; color:var(--suave);
+                     background:none; border:0; border-radius:999px; padding:3px 12px; }
+    .idioma button:hover { color:var(--texto); }
+    .idioma button[aria-pressed="true"] { background:var(--laranja); color:#1a0f00; }
+    @media (max-width:700px) {
+      .cabecalho { flex-wrap:wrap; justify-content:center; row-gap:4px; border-radius:24px; padding:8px 10px; }
+      .cabecalho nav a { padding:4px 9px; font-size:.9rem; letter-spacing:.08em; }
+      .marca { display:none; }
+    }
+
     /* ===== contato ===== */
     .contato { padding:24px 26px; }
     .contato p { margin:0 0 18px; color:#c6cfdb; }
@@ -185,7 +197,7 @@
 
     @media (max-width:900px) {
       .pagina { grid-template-columns:1fr; gap:0; padding:0 20px; }
-      .lateral { position:static; height:auto; padding:96px 0 32px; }
+      .lateral { position:static; height:auto; padding:124px 0 32px; }
       .conteudo { padding:24px 0 64px; min-height:0; }
     }
   </style>
@@ -199,14 +211,18 @@
       <a href="#formacao">Formação</a>
       <a href="#contato">Contato</a>
     </nav>
+    <div class="idioma" role="group" aria-label="Idioma" data-no-i18n>
+      <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
   </header>
 
   <div class="pagina" id="topo">
     <aside class="lateral">
       <span class="selo">Manaus, AM</span>
       <div class="identidade">
-        <img class="foto" src="img/thais.jpg" alt="Foto de Thaís Souza">
-        <h1>Thaís <span>Souza</span></h1>
+        <img class="foto" src="img/thais.jpg" alt="Foto de Thaís Carolyne">
+        <h1>Thaís <span>Carolyne</span></h1>
       </div>
       <p class="cargo">Software Engineer · Salesforce Marketing Cloud</p>
       <p class="sobre">
@@ -356,7 +372,7 @@
           <p>Vamos conversar? Me escreva por e-mail ou me encontre nas redes.</p>
           <div class="email-linha">
             <span class="email-texto" id="email-texto">thaiscaroline450@gmail.com</span>
-            <button class="botao" id="copiar-email" type="button">Copiar e-mail</button>
+            <button class="botao" id="copiar-email" type="button" data-no-i18n>Copiar e-mail</button>
           </div>
           <div class="links">
             <a href="https://www.linkedin.com/in/thaiscarolyne01/" target="_blank" rel="noopener">LinkedIn</a>
@@ -365,7 +381,7 @@
         </div>
       </section>
 
-      <footer>Os projetos acima são pessoais. Trabalhos feitos para empresas não são exibidos aqui.<br>© 2026 Thaís Souza · Manaus, AM</footer>
+      <footer>Os projetos acima são pessoais. Trabalhos feitos para empresas não são exibidos aqui.<br>© 2026 Thaís Carolyne · Manaus, AM</footer>
     </main>
   </div>
 
@@ -431,7 +447,7 @@
         <img src="img/hollowcity-lobisomem.webp" alt="Luta contra o lobisomem" loading="lazy">
       </div>
       <h4>Créditos</h4>
-      <p>Arte e trilha: Thaís Souza, com apoio de IA.</p>
+      <p>Arte e trilha: Thaís Carolyne, com apoio de IA.</p>
       <h4>Tecnologias</h4>
       <ul class="pilulas"><li>JavaScript</li><li>Phaser</li><li>Firebase (Firestore)</li></ul>
     </div>
@@ -539,13 +555,189 @@
       d.addEventListener('click', function (e) { if (e.target === d) d.close(); }); // clique fora fecha
     });
 
+    // ===== idioma (PT / EN) =====
+    // O HTML está em português. A tabela abaixo traduz para inglês, usando o texto em português
+    // (sem espaços extras) como chave. Se mudar um texto em português, mude a chave aqui também.
+    var I18N_EN = {
+      // cabeçalho e lateral
+      'Projetos': `Projects`, 'Premiações': `Awards`, 'Formação': `Education`, 'Contato': `Contact`, 'Idioma': `Language`,
+      'Foto de Thaís Carolyne': `Photo of Thaís Carolyne`,
+      'Trabalho com dados, automação e apps. Na Bemol Digital desenvolvo integrações e automações de marketing com Salesforce, Python e Databricks. Fora do trabalho, criei o CuidadoPet, meu primeiro app Android na Play Store, e o Hollow City, um jogo que você pode jogar aqui na página.':
+        `I work with data, automation and apps. At Bemol Digital I build marketing integrations and automations with Salesforce, Python and Databricks. Outside work, I created CuidadoPet, my first Android app on the Play Store, and Hollow City, a game you can play right here on the page.`,
+      // projetos
+      'Filtrar projetos': `Filter projects`, 'Todos': `All`, 'Jogos': `Games`, 'IA': `AI`,
+      'App Android': `Android app`,
+      'Rotina de saúde do pet no celular: remédios, vacinas, refeições e água. Publicado na Play Store.': `Your pet's health routine on your phone: medication, vaccines, meals and water. Published on the Play Store.`,
+      'Ver detalhes →': `See details →`,
+      'Jogo · jogável aqui': `Game · playable here`,
+      'Jogo 2D de ação em pixel art. Enfrente ogro, bruxa e lobisomem direto no navegador.': `2D pixel-art action game. Fight an ogre, a witch and a werewolf right in your browser.`,
+      'Jogar agora →': `Play now →`,
+      'IA · vídeo': `AI · video`,
+      'Estúdio de Histórias': `Story Studio`,
+      'Transforma cenas escritas em vídeos verticais narrados, com imagens e voz geradas por IA.': `Turns written scenes into narrated vertical videos, with AI-generated images and voice.`,
+      // premiações (cartões)
+      '50 Projetos de IA': `50 AI Projects`,
+      '7 projetos premiados entre cerca de 200 da campanha de IA da empresa.': `7 awarded projects out of about 200 in the company's AI campaign.`,
+      'Top 10 Projetos de IA': `Top 10 AI Projects`,
+      '9º lugar com o Agente de Suporte N3, um chatbot para os processos internos.': `9th place with the N3 Support Agent, a chatbot for internal processes.`,
+      '2º Lugar e Menção Honrosa com um projeto que automatiza a criação de casos no Salesforce.': `2nd Place and Honorable Mention with a project that automates case creation in Salesforce.`,
+      'Primeira Double Star Ranger': `First Double Star Ranger`,
+      'Primeira Ranger e primeira Double Star Ranger da Bemol Digital.': `First Ranger and first Double Star Ranger at Bemol Digital.`,
+      // formação
+      'Formação e certificações': `Education and certifications`,
+      'Arquitetura de Soluções Digitais (pós-graduação)': `Digital Solutions Architecture (postgraduate)`,
+      'Bacharelado em Sistemas de Informação': `Bachelor's in Information Systems`,
+      'Universidade Federal do Amazonas · 2015 – 2021': `Federal University of Amazonas · 2015 – 2021`,
+      'Aluna pesquisadora, Laboratório 312': `Research student, Laboratory 312`,
+      'Certificações': `Certifications`, 'Ver perfil': `View profile`,
+      'Formação de Marketing Salesforce': `Salesforce Marketing Training`,
+      'SAP Activate: gestão ágil em projetos SAP': `SAP Activate: agile project management in SAP projects`,
+      'Python para Data Science': `Python for Data Science`,
+      'Git e GitHub': `Git and GitHub`,
+      'Publicações': `Publications`,
+      'Um estudo sobre a contratação de serviços de tecnologia da informação pela administração pública federal': `A study on the contracting of information technology services by the federal public administration (in Portuguese)`,
+      'A percepção dos alunos do ensino médio sobre os cursos de graduação na área de TI': `High school students' perception of undergraduate IT courses (in Portuguese)`,
+      // contato e rodapé
+      'Vamos conversar? Me escreva por e-mail ou me encontre nas redes.': `Let's talk? Email me or find me on social media.`,
+      'Copiar e-mail': `Copy e-mail`, 'Copiado!': `Copied!`,
+      'Os projetos acima são pessoais. Trabalhos feitos para empresas não são exibidos aqui.': `The projects above are personal. Work done for companies is not shown here.`,
+      // painéis: comuns
+      'Fechar ✕': `Close ✕`, 'O que faz': `What it does`, 'Destaques': `Highlights`, 'Prints': `Screenshots`,
+      'Tecnologias': `Technologies`, 'Sobre': `About`,
+      // CuidadoPet
+      'App Android gratuito · publicado na Play Store': `Free Android app · published on the Play Store`,
+      'O CuidadoPet é um app que fiz para ajudar tutores no cuidado dos seus melhores amigos. Com ele, o tutor gerencia toda a rotina do bichinho, como alimentação e medicação, e recebe alertas para não esquecer nada.':
+        `CuidadoPet is an app I built to help pet owners take care of their best friends. With it, owners manage their pet's whole routine, like feeding and medication, and get alerts so nothing is forgotten.`,
+      'Há uma área para centralizar todos os exames do pet, sem perdê-los nem precisar procurar em pastas no computador. Também há o diário de saúde, onde o tutor registra acontecimentos importantes, como episódios de vômito ou desânimo, e acompanha os sintomas ao longo do tempo.':
+        `There is an area to keep all of the pet's exams in one place, so they are never lost and you don't have to dig through folders on a computer. There is also a health diary, where the owner records important events, such as episodes of vomiting or lethargy, and follows symptoms over time.`,
+      'Todas essas informações podem ser compartilhadas por PDF ou WhatsApp com o médico veterinário.': `All this information can be shared as a PDF or via WhatsApp with the veterinarian.`,
+      'Funciona offline, sem conta e sem cadastro': `Works offline, with no account or sign-up`,
+      'Os dados ficam só no celular do tutor': `Data stays only on the owner's phone`,
+      'Widget na tela inicial com o próximo remédio': `Home screen widget with the next medication`,
+      'Tela Hoje': `Today screen`, 'Tela de medicação': `Medication screen`, 'Tela de refeições': `Meals screen`,
+      'Tela de hidratação': `Hydration screen`, 'Tela de vacinas e vermífugos': `Vaccines and deworming screen`,
+      'Ver na Play Store': `View on the Play Store`,
+      // Hollow City
+      'Jogo 2D de ação em pixel art · jogável no navegador': `2D pixel-art action game · playable in the browser`,
+      'O jogo': `The game`,
+      'Um investigador enfrenta criaturas numa cidade amaldiçoada. Cada fase é uma luta contra um monstro diferente (ogro, bruxa, lobisomem e chefes), com cenas de história, modo "virada" quando a vida está baixa, bestiário e ranking global de tempos.':
+        `An investigator faces creatures in a cursed city. Each stage is a fight against a different monster (ogre, witch, werewolf and bosses), with story scenes, a "comeback" mode when health is low, a bestiary and a global time ranking.`,
+      'Português e inglês': `Portuguese and English`,
+      'Controles de teclado e de toque': `Keyboard and touch controls`,
+      'Ranking online com Firebase': `Online ranking with Firebase`,
+      'Jogue aqui': `Play here`, 'Jogar agora': `Play now`,
+      'Funciona no computador e no celular': `Works on computer and phone`,
+      'Teclado: setas (mover), Espaço (pular), Z (soco), X (tiro), C (poção), Shift (esquiva). No celular, os botões aparecem na tela.':
+        `Keyboard: arrows (move), Space (jump), Z (punch), X (shoot), C (potion), Shift (dodge). On phones, the buttons appear on screen.`,
+      'Cena de abertura': `Opening scene`, 'Luta contra o ogro': `Fight against the ogre`,
+      'Luta contra a bruxa': `Fight against the witch`, 'Luta contra o lobisomem': `Fight against the werewolf`,
+      'Créditos': `Credits`,
+      'Arte e trilha: Thaís Carolyne, com apoio de IA.': `Art and soundtrack: Thaís Carolyne, with AI assistance.`,
+      // Estúdio de Histórias
+      'Gerador de vídeos narrados a partir de cenas escritas': `Narrated video generator from written scenes`,
+      'Tenho me aventurado na produção de conteúdo, escrevendo histórias para virarem vídeos curtos narrados. O Estúdio de Histórias é a "mesa de trabalho" de cada história: cadastro uma vez só os personagens e os cenários, com descrição e imagens de referência, e escrevo cada cena citando esses nomes (':
+        `I have been venturing into content creation, writing stories to become short narrated videos. Story Studio is the "workbench" of each story: I register characters and settings just once, with a description and reference images, and write each scene citing those names (`,
+      '{Nome}': `{Name}`,
+      'O programa organiza tudo num lugar só, monta os prompts que uso para gerar as imagens e a narração com IA (Gemini) e junta o resultado num vídeo vertical (1080×1920) pronto, com voz, legenda e imagens, ou até trechos de vídeo que eu mesma envio. Assim não preciso repetir as mesmas explicações a cada cena nem perder o fio da história entre um capítulo e outro.':
+        `The program keeps everything in one place, builds the prompts I use to generate the images and narration with AI (Gemini) and puts the result together in a finished vertical video (1080×1920), with voice, subtitles and images, or even video clips that I upload myself. That way I don't have to repeat the same explanations in every scene or lose the thread of the story between chapters.`,
+      'É o meu projeto caçula, ainda em desenvolvimento, e ganha novos recursos conforme eu o uso e aprendo.': `It is my youngest project, still in development, and it gains new features as I use it and learn.`,
+      'Como funciona': `How it works`,
+      'Projeto': `Project`, 'Personagens e ambientes': `Characters and settings`, 'Cenas': `Scenes`, 'Imagem + voz': `Image + voice`, 'Vídeo MP4': `MP4 video`,
+      'Imagens de referência enviadas junto com o prompt, para manter a aparência dos personagens': `Reference images sent with the prompt, to keep the characters' look consistent`,
+      'Geração em lote por capítulo e visualização do prompt enviado': `Batch generation per chapter and a view of the prompt that was sent`,
+      'Possibilidade de usar vídeo próprio em uma cena, com corte e controle do som original': `Option to use your own video in a scene, with trimming and control of the original sound`,
+      'Roda em Docker, com banco Postgres e arquivos em volumes': `Runs on Docker, with a Postgres database and files in volumes`,
+      'Tela do projeto: estilo visual, voz e variáveis': `Project screen: visual style, voice and variables`,
+      'Lista de cenas de um capítulo': `List of scenes in a chapter`,
+      'Cena com imagem gerada por IA': `Scene with an AI-generated image`,
+      'Projeto e variáveis': `Project and variables`, 'Cenas do capítulo': `Chapter scenes`, 'Cena com imagem gerada': `Scene with generated image`,
+      // premiações (painéis)
+      'Campanha de IA · Bemol Digital': `AI Campaign · Bemol Digital`,
+      'Premiação 50 Projetos de IA da Bemol': `Bemol's 50 AI Projects award`,
+      'A campanha de IA da Bemol reuniu cerca de 200 projetos voltados ao uso de inteligência artificial na empresa. Desses, 50 foram selecionados como destaques por potencial de impacto, viabilidade e originalidade. Participei de 7 dos projetos que chegaram ao top 50 e foram premiados.':
+        `Bemol's AI campaign gathered about 200 projects focused on using artificial intelligence in the company. Of these, 50 were selected as highlights for their potential impact, feasibility and originality. I took part in 7 of the projects that reached the top 50 and were awarded.`,
+      '9º lugar · Agente de Suporte N3 · Bemol Digital': `9th place · N3 Support Agent · Bemol Digital`,
+      'Premiação Top 10 Projetos de IA da Bemol': `Bemol's Top 10 AI Projects award`,
+      'O projeto': `The project`,
+      'Um agente chatbot que ajuda os colaboradores internos a entender os processos e as regras de negócio da empresa. O objetivo é suavizar a curva de aprendizado sobre os processos internos e auxiliar na resolução de problemas (chamados).':
+        `A chatbot agent that helps internal employees understand the company's processes and business rules. The goal is to ease the learning curve on internal processes and help solve problems (tickets).`,
+      '2º Lugar e Menção Honrosa · hackathon da Bemol Digital': `2nd Place and Honorable Mention · Bemol Digital hackathon`,
+      'Medalhas do Bemolthon: 2º Lugar e Menção Honrosa': `Bemolthon medals: 2nd Place and Honorable Mention`,
+      'Um projeto que automatiza a criação de casos na plataforma de atendimento ao cliente (Salesforce). Ele recebeu duas premiações: 2º Lugar e Menção Honrosa. Foram dias de dedicação em equipe, e o resultado veio como reconhecimento do esforço de todos.':
+        `A project that automates case creation on the customer service platform (Salesforce). It received two awards: 2nd Place and Honorable Mention. It took days of team effort, and the result came as recognition of everyone's work.`,
+      'Thaís com a jaqueta de Trailblazer': `Thaís wearing the Trailblazer jacket`,
+      'Fui a primeira Ranger e a primeira Double Star Ranger da Bemol Digital. A empresa reconheceu a conquista com a jaqueta de Trailblazer.':
+        `I was the first Ranger and the first Double Star Ranger at Bemol Digital. The company recognized the achievement with the Trailblazer jacket.`,
+      // metatags
+      'Software Engineer em Manaus. Dados, automação e apps.': `Software Engineer in Manaus, Brazil. Data, automation and apps.`,
+      'Dados, automação e apps. Projetos: CuidadoPet, Hollow City e Estúdio de Histórias.': `Data, automation and apps. Projects: CuidadoPet, Hollow City and Story Studio.`
+    };
+
+    var lang = 'pt';
+    var textosOriginais = new WeakMap();
+    function norm(s) { return s.replace(/\s+/g, ' ').trim(); }
+    function tr(pt) { return (lang === 'en' && I18N_EN[pt]) || pt; }
+
+    function aplicarIdioma(l) {
+      lang = l;
+      document.documentElement.lang = (l === 'en') ? 'en' : 'pt-BR';
+
+      // textos
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (n) {
+          var p = n.parentNode;
+          if (!p || p.nodeName === 'SCRIPT' || p.nodeName === 'STYLE' || (p.closest && p.closest('[data-no-i18n]'))) return NodeFilter.FILTER_REJECT;
+          return n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      var nos = [];
+      while (walker.nextNode()) nos.push(walker.currentNode);
+      nos.forEach(function (n) {
+        if (!textosOriginais.has(n)) textosOriginais.set(n, n.nodeValue);
+        var orig = textosOriginais.get(n), chave = norm(orig);
+        if (l === 'en' && I18N_EN[chave]) {
+          n.nodeValue = (/^\s/.test(orig) ? ' ' : '') + I18N_EN[chave] + (/\s$/.test(orig) ? ' ' : '');
+        } else {
+          n.nodeValue = orig;
+        }
+      });
+
+      // atributos (alt e aria-label)
+      document.querySelectorAll('[alt],[aria-label]').forEach(function (el) {
+        ['alt', 'aria-label'].forEach(function (a) {
+          if (!el.hasAttribute(a)) return;
+          el.__pt = el.__pt || {};
+          if (!(a in el.__pt)) el.__pt[a] = el.getAttribute(a);
+          el.setAttribute(a, (l === 'en' && I18N_EN[norm(el.__pt[a])]) || el.__pt[a]);
+        });
+      });
+
+      // metatags
+      document.querySelectorAll('meta[name="description"], meta[property="og:description"]').forEach(function (m) {
+        if (!m.__pt) m.__pt = m.content;
+        m.content = (l === 'en' && I18N_EN[norm(m.__pt)]) || m.__pt;
+      });
+
+      btnEmail.textContent = tr('Copiar e-mail');
+      document.querySelectorAll('.idioma button').forEach(function (b) {
+        b.setAttribute('aria-pressed', b.dataset.lang === l ? 'true' : 'false');
+      });
+    }
+
+    document.querySelectorAll('.idioma button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        aplicarIdioma(b.dataset.lang);
+        try { localStorage.setItem('lang', b.dataset.lang); } catch (e) {}
+      });
+    });
+
     // copiar e-mail
     var btnEmail = document.getElementById('copiar-email');
     btnEmail.addEventListener('click', function () {
       var texto = document.getElementById('email-texto').textContent;
       function ok() {
-        btnEmail.textContent = 'Copiado!';
-        setTimeout(function () { btnEmail.textContent = 'Copiar e-mail'; }, 2000);
+        btnEmail.textContent = tr('Copiado!');
+        setTimeout(function () { btnEmail.textContent = tr('Copiar e-mail'); }, 2000);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(texto).then(ok, function () {
@@ -570,6 +762,12 @@
       frame.removeAttribute('src');
       jogo.classList.remove('ativo');
     });
+
+    // idioma inicial: escolha salva > idioma do navegador (português = PT, qualquer outro = EN)
+    var idiomaSalvo = null;
+    try { idiomaSalvo = localStorage.getItem('lang'); } catch (e) {}
+    var idiomaNavegador = (navigator.languages && navigator.languages[0]) || navigator.language || 'pt';
+    aplicarIdioma((idiomaSalvo === 'pt' || idiomaSalvo === 'en') ? idiomaSalvo : (/^pt/i.test(idiomaNavegador) ? 'pt' : 'en'));
   </script>
 </body>
 </html>
