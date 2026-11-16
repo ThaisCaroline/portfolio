@@ -14,7 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Trailhead Stats
-        uses: nabondance/trailhead-stats@v2
+        # Fixada no commit exato da v2.0.0 (segurança: action de terceiros com permissão de escrita)
+        uses: nabondance/trailhead-stats@37bf64a484dddfb7c9adf682dcd96c8399680a20
         with:
           trailhead-username: 'tsouza35'
           display-file: 'index.html'
