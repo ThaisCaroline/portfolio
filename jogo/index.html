@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Hollow City</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    canvas {
+      touch-action: none;
+    }
+
+    /* aviso para girar o celular: só em aparelho de toque e só com a tela em pé (não bloqueia os toques) */
+    #aviso-girar {
+      display: none;
+      position: fixed;
+      left: 50%;
+      bottom: 6%;
+      transform: translateX(-50%);
+      z-index: 50;
+      pointer-events: none;
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #ff8a00;
+      padding: 10px 16px;
+    }
+    @media (orientation: portrait) and (pointer: coarse) {
+      #aviso-girar { display: block; }
+    }
+  </style>
+  <!-- bibliotecas guardadas no projeto (js/lib), para o jogo abrir mesmo sem internet -->
+  <script src="js/lib/firebase-app-compat.js"></script>
+  <script src="js/lib/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <div id="aviso-girar">ROTATE YOUR DEVICE</div>
+  <script>
+    // celular: no primeiro toque entra em tela cheia e trava na horizontal (Android/Chrome; o iPhone não deixa, e lá só vale o aviso)
+    (function () {
+      if (!window.matchMedia('(pointer: coarse)').matches) return;
+      document.addEventListener('pointerup', function () {
+        const el = document.documentElement;
+        const pedir = el.requestFullscreen || el.webkitRequestFullscreen;
+        if (!pedir) return;
+        Promise.resolve(pedir.call(el))
+          .then(function () {
+            if (screen.orientation && screen.orientation.lock) return screen.orientation.lock('landscape');
+          })
+          .catch(function () {});
+      }, { once: true });
+    })();
+  </script>
+  <script src="js/lib/phaser.min.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/textos.js"></script>
+  <script src="js/recolor.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/controles.js"></script>
+  <script src="js/tela-inicial.js"></script>
+  <script src="js/tela-nome.js"></script>
+  <script src="js/ranking-fase.js"></script>
+  <script src="js/rankings.js"></script>
+  <script src="js/bestiario.js"></script>
+  <script src="js/abertura.js"></script>
+  <script src="js/final.js"></script>
+  <script src="js/mapa.js"></script>
+  <script src="js/dialogo.js"></script>
+  <script src="js/cutscene-boss.js"></script>
+  <script src="js/fases/fase1.js"></script>
+  <script src="js/fases/fase2.js"></script>
+  <script src="js/fases/fase3.js"></script>
+  <script src="js/luta/heroi.js"></script>
+  <script src="js/luta/vilao-golpes.js"></script>
+  <script src="js/luta/vilao-dano.js"></script>
+  <script src="js/luta/pocao-heroi.js"></script>
+  <script src="js/luta/fantasmas.js"></script>
+  <script src="js/luta/entrada.js"></script>
+  <script src="js/fases/fase-boss.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+// Abertura: 3 telas mostradas depois do nome e antes do mapa (como o detetive chegou até aqui).
+// Cada tela tem uma imagem (assets/abertura/abertura-N.png), um texto (opcional, pelo identificador em textos.js) e uma duração.
+// Toque ou Enter avança; depois da última tela o jogo abre o mapa.
+
+const SLIDES_ABERTURA = [
+  {
+    imagem: 'assets/abertura/abertura-1.png',
+    duracao: 4600
+  },
+  {
+    imagem: 'assets/abertura/abertura-2.png',
+    texto: 'abertura.2',
+    duracao: 6200
+  },
+  {
+    imagem: 'assets/abertura/abertura-3.png',
+    texto: 'abertura.3',
+    duracao: 5400
+  }
+];
+
+class Abertura extends Phaser.Scene {
+  constructor() {
+    super('Abertura');
+  }
+
+  preload() {
+    SLIDES_ABERTURA.forEach((slide, i) => {
+      if (slide.imagem) this.load.image(`abertura-${i}`, slide.imagem);
+    });
+  }
+
+  create() {
+    this.slideAtual = 0;
+    this.trocando = false;
+    this.podePular = false;   // o toque que apertou o START não pode pular a primeira tela
+    this.timer = null;
+    this.imagem = null;
+
+    this.fundo = this.add.rectangle(0, 0, 512, 224, 0x000000).setOrigin(0, 0).setDepth(0);
+
+    // legenda embaixo: só o texto, com contorno preto, para a imagem ficar livre (só aparece nas telas que têm texto)
+    this.textoSlide = this.add.text(256, 218, '', {
+      fontFamily: 'monospace',
+      fontSize: '12px',
+      color: '#ffffff',
+      align: 'center',
+      wordWrap: { width: 480 },
+      lineSpacing: 4,
+      stroke: '#000000',
+      strokeThickness: 5
+    }).setOrigin(0.5, 1).setAlpha(0).setDepth(2);
+
+    this.dica = this.add.text(8, 6, traduzir('ui.tocar_pular'), {
+      fontFamily: 'monospace',
+      fontSize: '8px',
+      color: '#aaaaaa',
+      stroke: '#000000',
+      strokeThickness: 3
+    }).setOrigin(0, 0).setDepth(2);
+
+    // botão no canto: pula a abertura inteira e vai direto para o mapa
+    this.botaoPular = this.add.text(506, 4, traduzir('ui.pular_tudo'), {
+      fontFamily: 'monospace',
+      fontSize: '9px',
+      fontStyle: 'bold',
+      color: '#ffffff',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      padding: { x: 6, y: 4 }
+    }).setOrigin(1, 0).setDepth(3).setInteractive({ useHandCursor: true });
+    this.botaoPular.on('pointerdown', () => this.pularTudo());
+
+    // toque ou Enter avança para a próxima tela (tocar no botão de pular tudo não conta)
+    this.input.on('pointerdown', (pointer, sobre) => {
+      if (sobre.length) return;
+      this.avancar();
+    });
+    this.input.keyboard.on('keydown-ENTER', () => this.avancar());
+    this.time.delayedCall(600, () => { this.podePular = true; });
+
+    // remove os ouvintes quando a cena termina
+    this.events.once('shutdown', () => {
+      this.input.off('pointerdown');
+      this.input.keyboard.off('keydown-ENTER');
+      if (this.timer) this.timer.remove();
+    });
+
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
+    this.mostrarSlide(0);
+  }
+
+  mostrarSlide(i) {
+    const slide = SLIDES_ABERTURA[i];
+    this.slideAtual = i;
+
+    // a imagem anterior sai e a desta tela entra
+    if (this.imagem) {
+      this.imagem.destroy();
+      this.imagem = null;
+    }
+    if (slide.imagem && this.textures.exists(`abertura-${i}`)) {
+      this.imagem = this.add.image(256, 112, `abertura-${i}`)
+        .setDisplaySize(512, 224)
+        .setDepth(0.5);
+    }
+
+    // texto no idioma atual; telas sem texto ficam sem legenda
+    const texto = slide.texto ? traduzir(slide.texto) : '';
+    this.textoSlide.setText(texto);
+    this.textoSlide.setAlpha(0);
+    if (texto) {
+      this.tweens.add({ targets: this.textoSlide, alpha: 1, duration: 1400 });
+    }
+
+    this.timer = this.time.delayedCall(slide.duracao, () => this.proximo());
+  }
+
+  // pula todas as telas de uma vez: sai direto para o mapa
+  pularTudo() {
+    if (this.trocando || !this.podePular) return;
+    if (this.timer) this.timer.remove();
+    this.sair();
+  }
+
+  avancar() {
+    if (this.trocando || !this.podePular) return;
+    this.proximo();
+  }
+
+  // troca de tela com fade preto, como um corte de cena; depois da última, abre o mapa
+  proximo() {
+    if (this.trocando) return;
+    if (this.timer) this.timer.remove();
+
+    if (this.slideAtual >= SLIDES_ABERTURA.length - 1) {
+      this.sair();
+      return;
+    }
+
+    this.trocando = true;
+    const cam = this.cameras.main;
+    cam.fadeOut(900, 0, 0, 0);
+    cam.once('camerafadeoutcomplete', () => {
+      this.mostrarSlide(this.slideAtual + 1);
+      cam.fadeIn(900, 0, 0, 0);
+      cam.once('camerafadeincomplete', () => { this.trocando = false; });
+    });
+  }
+
+  sair() {
+    this.trocando = true;
+    const cam = this.cameras.main;
+    cam.fadeOut(1300, 0, 0, 0);
+    cam.once('camerafadeoutcomplete', () => this.scene.start('Mapa', { fase: 0 }));
+  }
+}

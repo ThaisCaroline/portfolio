@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thaís Souza | Software Engineer</title>
+  <meta name="description" content="Software Engineer em Manaus. Dados, automação e apps.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Thaís Souza | Software Engineer">
+  <meta property="og:description" content="Dados, automação e apps. Projetos: CuidadoPet, Hollow City e Estúdio de Histórias.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#070b12">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fundo:#070b12; --texto:#e9edf3; --suave:#8f9bad; --linha:#1b2432;
+      --laranja:#ff8a00; --laranja-escuro:#b35f00;
+      --titulo:'Barlow Condensed', sans-serif;
+      --corpo:'Barlow', system-ui, sans-serif;
+      --turquesa:#3aacb8; --pixel:'Pixelify Sans', monospace;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; color:var(--texto); font-family:var(--corpo); line-height:1.6;
+      background-color:var(--fundo);
+      background-image:
+        radial-gradient(900px 400px at 15% -5%, rgba(255,138,0,.10), transparent 70%),
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size:auto, 44px 44px, 44px 44px;
+      background-attachment:fixed;
+    }
+
+    /* cabeçalho flutuante */
+    .cabecalho {
+      position:fixed; top:16px; left:16px; right:16px; z-index:20;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:8px 12px 8px 16px; border:1px solid var(--linha); border-radius:999px;
+      background:rgba(7,11,18,.72); backdrop-filter:blur(10px);
+    }
+    .marca { font-family:var(--titulo); font-weight:800; font-size:1.3rem; letter-spacing:.06em; color:var(--laranja); text-decoration:none; }
+    .cabecalho nav { display:flex; gap:6px; }
+    .cabecalho nav a {
+      font-family:var(--titulo); font-weight:700; font-size:1rem; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--suave); text-decoration:none; padding:6px 14px; border-radius:999px;
+    }
+    .cabecalho nav a:hover { color:var(--texto); background:#111a28; }
+
+    /* layout largo: coluna fixa + conteúdo */
+    .pagina { display:grid; grid-template-columns:minmax(320px, 400px) 1fr; gap:56px; padding:0 48px; max-width:1400px; }
+    .lateral { position:sticky; top:0; align-self:start; height:100vh; padding:92px 0 24px; display:flex; flex-direction:column; overflow-y:auto; scrollbar-width:none; }
+    .lateral::-webkit-scrollbar { display:none; }
+    .selo {
+      align-self:flex-start; font-family:var(--titulo); font-weight:700; font-size:.9rem; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--laranja); border:1px solid rgba(255,138,0,.5); border-radius:999px; padding:4px 14px; margin-bottom:20px;
+    }
+    h1 { font-family:var(--titulo); font-weight:800; text-transform:uppercase; font-size:clamp(3.2rem,5.4vw,4.6rem); line-height:.92; margin:0 0 16px; }
+    h1 span { display:block; color:var(--laranja); }
+    .cargo { font-family:var(--titulo); font-weight:600; font-size:1.2rem; letter-spacing:.08em; text-transform:uppercase; color:var(--suave); margin:0 0 16px; }
+    .lateral p.sobre { margin:0 0 22px; color:#c6cfdb; max-width:38ch; }
+
+    .botao {
+      display:inline-block; font-family:var(--titulo); font-weight:800; font-size:1.15rem; letter-spacing:.1em; text-transform:uppercase;
+      text-decoration:none; padding:12px 28px; border-radius:10px;
+      background:var(--laranja); color:#1a0f00; border-bottom:5px solid var(--laranja-escuro);
+      box-shadow:0 0 24px rgba(255,138,0,.25);
+    }
+    .botao:hover { transform:translateY(2px); border-bottom-width:3px; }
+    .acoes { display:flex; flex-wrap:wrap; align-items:center; gap:18px; margin-bottom:28px; }
+    .links { display:flex; gap:18px; }
+    .links a { font-family:var(--titulo); font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--texto); text-decoration:none; border-bottom:2px solid var(--laranja); }
+    .links a:hover { color:var(--laranja); }
+
+    .pilulas { display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none; }
+    .pilulas li { font-family:var(--titulo); font-weight:700; font-size:.95rem; letter-spacing:.08em; text-transform:uppercase;
+                  padding:3px 12px; border-radius:999px; background:#0f1826; border:1px solid var(--linha); color:var(--suave); }
+
+    /* área dos projetos (cartões entram aqui no próximo passo) */
+    .conteudo { padding:110px 0 80px; min-height:100vh; }
+    .conteudo h2 { font-family:var(--titulo); font-weight:800; text-transform:uppercase; font-size:2.2rem; letter-spacing:.04em; margin:0 0 24px; }
+    .vazio { border:2px dashed var(--linha); border-radius:14px; padding:64px 24px; color:var(--suave); text-align:center; }
+
+
+    /* ===== grade de projetos ===== */
+    .filtros { display:flex; flex-wrap:wrap; gap:10px; margin:0 0 24px; }
+    .filtro { font-family:var(--titulo); font-weight:700; font-size:1.05rem; letter-spacing:.1em; text-transform:uppercase; cursor:pointer;
+              color:var(--suave); background:#0f1826; border:1px solid var(--linha); border-radius:999px; padding:6px 18px; }
+    .filtro:hover { color:var(--texto); }
+    .filtro[aria-pressed="true"] { color:#1a0f00; background:var(--laranja); border-color:var(--laranja); }
+    .grade { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; }
+    .cartao { all:unset; box-sizing:border-box; cursor:pointer; display:flex; flex-direction:column; background:#0c131f; border:1px solid var(--linha);
+              border-radius:16px; overflow:hidden; transition:transform .15s, border-color .15s; }
+    .cartao:hover, .cartao:focus-visible { transform:translateY(-3px); border-color:var(--laranja); }
+    .cartao:focus-visible { outline:2px solid var(--laranja); outline-offset:2px; }
+    .cartao[hidden] { display:none; }
+    .capa { aspect-ratio:16/10; width:100%; object-fit:cover; display:block; background:#0a1019; }
+    .cartao .corpo { padding:16px 18px 20px; }
+    .tag { display:inline-block; font-family:var(--titulo); font-weight:700; font-size:.85rem; letter-spacing:.16em; text-transform:uppercase; color:var(--laranja);
+           border:1px solid rgba(255,138,0,.5); border-radius:999px; padding:1px 10px; margin-bottom:8px; }
+    .cartao h3 { font-family:var(--titulo); font-weight:800; font-size:1.7rem; line-height:1.05; text-transform:uppercase; margin:0 0 6px; color:var(--texto); }
+    .cartao.hc h3 { font-family:var(--pixel); font-size:1.35rem; text-transform:none; color:var(--laranja); }
+    .cartao.cp h3 { color:var(--turquesa); }
+    .cartao p { margin:0 0 12px; color:#b7c1cf; font-size:.97rem; }
+    .pilulas.pequeno li { font-size:.8rem; padding:1px 9px; }
+    .ver { display:inline-block; margin-top:4px; font-family:var(--titulo); font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--laranja); }
+
+    /* ===== painel (modal) ===== */
+    dialog { width:min(980px, 94vw); max-height:90vh; padding:0; border:1px solid var(--linha); border-radius:18px; color:var(--texto); background:#0b121c; overflow:auto; }
+    dialog::backdrop { background:rgba(3,6,10,.78); backdrop-filter:blur(4px); }
+    .painel { padding:28px 28px 32px; }
+    .fechar { position:sticky; top:0; float:right; margin:12px 12px 0 0; z-index:5; cursor:pointer; font-family:var(--titulo); font-weight:800; font-size:1rem; letter-spacing:.1em;
+              text-transform:uppercase; color:var(--texto); background:#111a28; border:1px solid var(--linha); border-radius:999px; padding:6px 16px; }
+    .fechar:hover { border-color:var(--laranja); color:var(--laranja); }
+    dialog h2 { font-family:var(--titulo); font-weight:800; font-size:2.4rem; line-height:1; text-transform:uppercase; margin:0 0 6px; }
+    dialog.hc h2 { font-family:var(--pixel); text-transform:none; color:var(--laranja); font-size:2rem; }
+    dialog.cp h2 { color:var(--turquesa); }
+    dialog .sub { color:var(--suave); margin:0 0 20px; }
+    dialog h4 { font-family:var(--titulo); font-weight:700; font-size:1.1rem; letter-spacing:.14em; text-transform:uppercase; color:var(--laranja); margin:24px 0 8px; }
+    dialog p, dialog li { color:#c6cfdb; }
+    dialog ul.lista { margin:0; padding-left:20px; }
+    dialog .botoes { display:flex; flex-wrap:wrap; gap:14px; margin-top:22px; }
+    .botao.tur { background:var(--turquesa); color:#06191c; border-bottom-color:#237f89; box-shadow:0 0 24px rgba(58,172,184,.25); }
+    .botao.vazado { background:none; color:var(--laranja); border:2px solid var(--laranja); border-bottom-width:2px; box-shadow:none; }
+    button.botao { cursor:pointer; border-top:0; border-left:0; border-right:0; }
+    .tiras { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; }
+    .tiras img { height:380px; width:auto; border-radius:14px; flex:none; scroll-snap-align:start; border:1px solid var(--linha); }
+    .tiras.largas img { height:200px; }
+    .jogo { position:relative; aspect-ratio:512/224; background:#000; border-radius:12px; overflow:hidden; border:1px solid var(--linha); }
+    .jogo iframe { position:absolute; inset:0; width:100%; height:100%; border:0; display:none; }
+    .jogo.ativo iframe { display:block; }
+    .jogo .iniciar { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+                     background:linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)), url('img/hollowcity-ogro.webp') center/cover; }
+    .jogo.ativo .iniciar { display:none; }
+    .dica { color:var(--suave); font-size:.88rem; margin:8px 0 0; }
+    .dados { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:12px; margin:8px 0 0; }
+    .dado { background:#0f1826; border:1px solid var(--linha); border-radius:12px; padding:12px 14px; }
+    .dado b { display:block; font-family:var(--titulo); font-weight:800; font-size:1.8rem; color:var(--texto); line-height:1.1; }
+    .dado span { color:var(--suave); font-size:.88rem; }
+    .exemplo { outline:2px dashed var(--laranja); outline-offset:-2px; }
+    .aviso-exemplo { display:inline-block; font-family:var(--titulo); font-weight:700; font-size:.85rem; letter-spacing:.12em; text-transform:uppercase;
+                     color:var(--laranja); border:1px dashed var(--laranja); border-radius:999px; padding:1px 10px; margin:6px 0; }
+    .camadas { display:grid; gap:10px; }
+    .camada { background:#0f1826; border:1px solid var(--linha); border-left:4px solid var(--laranja); border-radius:10px; padding:10px 14px; }
+    .camada b { font-family:var(--titulo); font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--texto); }
+    .fluxo { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:8px 0 0; }
+    .fluxo span { background:#0f1826; border:1px solid var(--linha); border-radius:999px; padding:3px 14px; font-family:var(--titulo); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--texto); }
+    .fluxo i { color:var(--laranja); font-style:normal; }
+
+    /* ===== premiações ===== */
+    .premio .capa { object-fit:cover; }
+    .foto-premio { display:block; max-width:100%; max-height:70vh; margin:0 auto; border-radius:14px; border:1px solid var(--linha); }
+
+    /* ===== formação ===== */
+    .secao { margin-top:72px; }
+    .secao h2 { font-family:var(--titulo); font-weight:800; text-transform:uppercase; font-size:2.2rem; letter-spacing:.04em; margin:0 0 24px; }
+    .duas { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; }
+    .bloco { background:#0c131f; border:1px solid var(--linha); border-radius:16px; padding:20px 22px; }
+    .bloco h3 { font-family:var(--titulo); font-weight:700; font-size:1.15rem; letter-spacing:.14em; text-transform:uppercase; color:var(--laranja); margin:0 0 10px; }
+    .bloco ul { margin:0; padding:0; list-style:none; }
+    .bloco li { padding:6px 0; border-bottom:1px solid var(--linha); color:#c6cfdb; }
+    .bloco li:last-child { border-bottom:0; }
+    .bloco li small { display:block; color:var(--suave); }
+    footer { margin-top:64px; padding-top:20px; border-top:1px solid var(--linha); color:var(--suave); font-size:.88rem; }
+
+    @media (max-width:900px) {
+      .painel { padding:20px 18px 26px; }
+      dialog { width:100vw; max-height:100vh; height:100vh; border-radius:0; }
+      .tiras img { height:300px; }
+      .secao { margin-top:48px; }
+    }
+
+    @media (max-width:900px) {
+      .pagina { grid-template-columns:1fr; gap:0; padding:0 20px; }
+      .lateral { position:static; height:auto; padding:96px 0 32px; }
+      .conteudo { padding:24px 0 64px; min-height:0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="cabecalho">
+    <a class="marca" href="#topo">TS</a>
+    <nav>
+      <a href="#projetos">Projetos</a>
+      <a href="#premiacoes">Premiações</a>
+      <a href="#formacao">Formação</a>
+      <a href="mailto:thaiscaroline450@gmail.com">Contato</a>
+    </nav>
+  </header>
+
+  <div class="pagina" id="topo">
+    <aside class="lateral">
+      <span class="selo">Manaus, AM</span>
+      <h1>Thaís <span>Souza</span></h1>
+      <p class="cargo">Software Engineer · Salesforce Marketing Cloud</p>
+      <p class="sobre">
+        Trabalho com dados, automação e apps. Na Bemol Digital desenvolvo integrações
+        e automações de marketing com Salesforce, Python e Databricks. Fora do trabalho,
+        criei o CuidadoPet, meu primeiro app Android na Play Store, e o Hollow City,
+        um jogo que você pode jogar aqui na página.
+      </p>
+      <div class="acoes">
+        <a class="botao" href="mailto:thaiscaroline450@gmail.com">Contato</a>
+        <div class="links">
+          <a href="https://www.linkedin.com/in/thaiscarolyne01/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.salesforce.com/trailblazer/tsouza35" target="_blank" rel="noopener">Trailhead</a>
+        </div>
+      </div>
+      <ul class="pilulas">
+        <li>Salesforce</li><li>Marketing Cloud</li><li>Python</li><li>Databricks</li>
+      </ul>
+    </aside>
+
+    <main class="conteudo" id="projetos">
+      <h2>Projetos</h2>
+
+      <div class="filtros" role="group" aria-label="Filtrar projetos">
+        <button class="filtro" data-filtro="todos" aria-pressed="true">Todos</button>
+        <button class="filtro" data-filtro="app" aria-pressed="false">Apps</button>
+        <button class="filtro" data-filtro="jogo" aria-pressed="false">Jogos</button>
+        <button class="filtro" data-filtro="ia" aria-pressed="false">IA</button>
+      </div>
+
+      <div class="grade">
+        <article tabindex="0" role="button" class="cartao cp" data-abrir="cuidadopet" data-cat="app">
+          <img class="capa" src="img/cover-cuidadopet.webp" alt="" loading="lazy">
+          <span class="corpo">
+            <span class="tag">App Android</span>
+            <h3>CuidadoPet</h3>
+            <p>Rotina de saúde do pet no celular: remédios, vacinas, refeições e água. Publicado na Play Store.</p>
+            <ul class="pilulas pequeno"><li>Kotlin</li><li>Android</li><li>Offline</li></ul>
+            <span class="ver">Ver detalhes →</span>
+          </span>
+        </article>
+
+        <article tabindex="0" role="button" class="cartao hc" data-abrir="hollowcity" data-cat="jogo">
+          <img class="capa" src="img/hollowcity-lobisomem.webp" alt="" loading="lazy">
+          <span class="corpo">
+            <span class="tag">Jogo · jogável aqui</span>
+            <h3>Hollow City</h3>
+            <p>Jogo 2D de ação em pixel art. Enfrente ogro, bruxa e lobisomem direto no navegador.</p>
+            <ul class="pilulas pequeno"><li>JavaScript</li><li>Phaser</li><li>Firebase</li></ul>
+            <span class="ver">Jogar agora →</span>
+          </span>
+        </article>
+
+        <article tabindex="0" role="button" class="cartao" data-abrir="estudio" data-cat="ia">
+          <img class="capa" src="img/cover-estudio.jpg" alt="" loading="lazy">
+          <span class="corpo">
+            <span class="tag">IA · vídeo</span>
+            <h3>Estúdio de Histórias</h3>
+            <p>Transforma cenas escritas em vídeos verticais narrados, com imagens e voz geradas por IA.</p>
+            <ul class="pilulas pequeno"><li>Python</li><li>Streamlit</li><li>Gemini</li><li>FFmpeg</li></ul>
+            <span class="ver">Ver detalhes →</span>
+          </span>
+        </article>
+
+      </div>
+
+      <section class="secao" id="premiacoes">
+        <h2>Premiações</h2>
+        <div class="grade">
+          <article tabindex="0" role="button" class="cartao premio" data-abrir="top50">
+            <img class="capa" src="img/premio-top50.png" alt="" loading="lazy" style="object-position:50% 60%">
+            <span class="corpo">
+              <span class="tag">Bemol Digital</span>
+              <h3>50 Projetos de IA</h3>
+              <p>7 projetos premiados entre cerca de 200 da campanha de IA da empresa.</p>
+              <span class="ver">Ver detalhes →</span>
+            </span>
+          </article>
+
+          <article tabindex="0" role="button" class="cartao premio" data-abrir="top10">
+            <img class="capa" src="img/premio-top10.png" alt="" loading="lazy" style="object-position:50% 65%">
+            <span class="corpo">
+              <span class="tag">Bemol Digital</span>
+              <h3>Top 10 Projetos de IA</h3>
+              <p>9º lugar com o Agente de Suporte N3, um chatbot para os processos internos.</p>
+              <span class="ver">Ver detalhes →</span>
+            </span>
+          </article>
+
+          <article tabindex="0" role="button" class="cartao premio" data-abrir="bemolthon">
+            <img class="capa" src="img/premio-bemolthon-medalhas.png" alt="" loading="lazy">
+            <span class="corpo">
+              <span class="tag">Hackathon</span>
+              <h3>Bemolthon</h3>
+              <p>2º Lugar e Menção Honrosa com um projeto que automatiza a criação de casos no Salesforce.</p>
+              <span class="ver">Ver detalhes →</span>
+            </span>
+          </article>
+
+          <article tabindex="0" role="button" class="cartao premio" data-abrir="ranger">
+            <img class="capa" src="img/premio-trailblazer.png" alt="" loading="lazy">
+            <span class="corpo">
+              <span class="tag">Salesforce</span>
+              <h3>Primeira Double Star Ranger</h3>
+              <p>Primeira Ranger e primeira Double Star Ranger da Bemol Digital.</p>
+              <span class="ver">Ver detalhes →</span>
+            </span>
+          </article>
+        </div>
+      </section>
+
+      <section class="secao" id="formacao">
+        <h2>Formação e certificações</h2>
+        <div class="duas">
+          <div class="bloco">
+            <h3>Formação</h3>
+            <ul>
+              <li>Arquitetura de Soluções Digitais (pós-graduação)<small>PUC Minas · 2026 – 2028</small></li>
+              <li>Bacharelado em Sistemas de Informação<small>Universidade Federal do Amazonas · 2015 – 2021</small></li>
+              <li>Aluna pesquisadora, Laboratório 312<small>UFAM · 2019</small></li>
+            </ul>
+          </div>
+          <div class="bloco">
+            <h3>Certificações</h3>
+            <ul>
+              <li>Trailhead · Double Ranger<small><a href="https://www.salesforce.com/trailblazer/tsouza35" target="_blank" rel="noopener" style="color:var(--laranja)">Ver perfil</a></small></li>
+              <li>Formação de Marketing Salesforce</li>
+              <li>SAP Activate: gestão ágil em projetos SAP</li>
+              <li>Python para Data Science</li>
+              <li>Git e GitHub</li>
+              <li>User Access Fundamentals</li>
+            </ul>
+          </div>
+          <div class="bloco">
+            <h3>Publicações</h3>
+            <ul>
+              <li>Um estudo sobre a contratação de serviços de tecnologia da informação pela administração pública federal</li>
+              <li>A percepção dos alunos do ensino médio sobre os cursos de graduação na área de TI</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer>Os projetos acima são pessoais. Trabalhos feitos para empresas não são exibidos aqui.<br>© 2026 Thaís Souza · Manaus, AM</footer>
+    </main>
+  </div>
+
+  <!-- ====== PAINÉIS ====== -->
+
+  <dialog id="p-cuidadopet" class="cp" aria-label="CuidadoPet">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>CuidadoPet</h2>
+      <p class="sub">App Android gratuito · publicado na Play Store</p>
+      <div class="tiras">
+        <img src="img/cuidadopet-hoje.webp" alt="Tela Hoje" loading="lazy">
+        <img src="img/cuidadopet-medicacao.webp" alt="Tela de medicação" loading="lazy">
+        <img src="img/cuidadopet-refeicoes.webp" alt="Tela de refeições" loading="lazy">
+        <img src="img/cuidadopet-agua.webp" alt="Tela de hidratação" loading="lazy">
+        <img src="img/cuidadopet-vacinas.webp" alt="Tela de vacinas e vermífugos" loading="lazy">
+      </div>
+      <h4>O que faz</h4>
+      <p>Organiza a rotina de saúde do pet: lembretes de remédio, vacinas e vermífugos, plano de refeições, meta diária de água, diário de saúde, histórico de peso e relatório em PDF pra levar ao veterinário.</p>
+      <h4>Destaques</h4>
+      <ul class="lista">
+        <li>Funciona offline, sem conta e sem cadastro</li>
+        <li>Os dados ficam só no celular do tutor</li>
+        <li>Widget na tela inicial com o próximo remédio</li>
+      </ul>
+      <h4>Tecnologias</h4>
+      <ul class="pilulas"><li>Kotlin</li><li>Jetpack Compose</li><li>Room</li><li>Hilt</li><li>WorkManager</li><li>ML Kit</li><li>AdMob</li><li>Android Studio</li></ul>
+      <div class="botoes">
+        <a class="botao tur" href="https://play.google.com/store/apps/details?id=com.cuidadopet" target="_blank" rel="noopener">Ver na Play Store</a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="p-hollowcity" class="hc" aria-label="Hollow City">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>Hollow City</h2>
+      <p class="sub">Jogo 2D de ação em pixel art · jogável no navegador</p>
+      <div class="jogo" id="jogo">
+        <div class="iniciar">
+          <button class="botao" id="jogar">Jogar agora</button>
+          <span class="dica">Funciona no computador e no celular</span>
+        </div>
+        <iframe title="Hollow City" allow="fullscreen; autoplay" allowfullscreen></iframe>
+      </div>
+      <p class="dica">Teclado: setas (mover), Espaço (pular), Z (soco), X (tiro), C (poção), Shift (esquiva). No celular, os botões aparecem na tela.</p>
+      <div class="tiras largas" style="margin-top:16px">
+        <img src="img/hollowcity-abertura.webp" alt="Cena de abertura" loading="lazy">
+        <img src="img/hollowcity-ogro.webp" alt="Luta contra o ogro" loading="lazy">
+        <img src="img/hollowcity-bruxa.webp" alt="Luta contra a bruxa" loading="lazy">
+        <img src="img/hollowcity-lobisomem.webp" alt="Luta contra o lobisomem" loading="lazy">
+      </div>
+      <h4>O jogo</h4>
+      <p>Um investigador enfrenta criaturas numa cidade amaldiçoada. Cada fase é uma luta contra um monstro diferente (ogro, bruxa, lobisomem e chefes), com cenas de história, modo "virada" quando a vida está baixa, bestiário e ranking global de tempos.</p>
+      <ul class="lista">
+        <li>Português e inglês</li>
+        <li>Controles de teclado e de toque</li>
+        <li>Ranking online com Firebase</li>
+      </ul>
+      <h4>Créditos</h4>
+      <p>Arte e trilha: Thaís Souza, com apoio de IA.</p>
+      <h4>Tecnologias</h4>
+      <ul class="pilulas"><li>JavaScript</li><li>Phaser</li><li>Firebase (Firestore)</li></ul>
+    </div>
+  </dialog>
+
+  <dialog id="p-estudio" aria-label="Estúdio de Histórias">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>Estúdio de Histórias</h2>
+      <p class="sub">Gerador de vídeos narrados a partir de cenas escritas</p>
+
+      <h4>O que faz</h4>
+      <p>Tenho me aventurado na produção de conteúdo, escrevendo histórias para virarem vídeos curtos narrados. O Estúdio de Histórias é a "mesa de trabalho" de cada história: cadastro uma vez só os personagens e os cenários, com descrição e imagens de referência, e escrevo cada cena citando esses nomes (<code>{Nome}</code>).</p>
+      <p>O programa organiza tudo num lugar só, monta os prompts que uso para gerar as imagens e a narração com IA (Gemini) e junta o resultado num vídeo vertical (1080×1920) pronto, com voz, legenda e imagens, ou até trechos de vídeo que eu mesma envio. Assim não preciso repetir as mesmas explicações a cada cena nem perder o fio da história entre um capítulo e outro.</p>
+      <p>É o meu projeto caçula, ainda em desenvolvimento, e ganha novos recursos conforme eu o uso e aprendo.</p>
+      <h4>Como funciona</h4>
+      <div class="fluxo"><span>Projeto</span><i>→</i><span>Personagens e ambientes</span><i>→</i><span>Cenas</span><i>→</i><span>Imagem + voz</span><i>→</i><span>Vídeo MP4</span></div>
+      <h4>Destaques</h4>
+      <ul class="lista">
+        <li>Imagens de referência enviadas junto com o prompt, para manter a aparência dos personagens</li>
+        <li>Geração em lote por capítulo e visualização do prompt enviado</li>
+        <li>Possibilidade de usar vídeo próprio em uma cena, com corte e controle do som original</li>
+        <li>Roda em Docker, com banco Postgres e arquivos em volumes</li>
+      </ul>
+      <h4>Prints</h4>
+      <div class="tiras">
+        <figure style="margin:0;flex:none;scroll-snap-align:start"><img src="img/estudio-projeto.jpg" alt="Tela do projeto: estilo visual, voz e variáveis" loading="lazy" style="height:240px"><figcaption class="dica">Projeto e variáveis</figcaption></figure>
+        <figure style="margin:0;flex:none;scroll-snap-align:start"><img src="img/estudio-cenas.jpg" alt="Lista de cenas de um capítulo" loading="lazy" style="height:240px"><figcaption class="dica">Cenas do capítulo</figcaption></figure>
+        <figure style="margin:0;flex:none;scroll-snap-align:start"><img src="img/estudio-cena.jpg" alt="Cena com imagem gerada por IA" loading="lazy" style="height:240px"><figcaption class="dica">Cena com imagem gerada</figcaption></figure>
+      </div>
+      <h4>Tecnologias</h4>
+      <ul class="pilulas"><li>Python</li><li>Streamlit</li><li>PostgreSQL</li><li>Docker</li><li>FFmpeg</li><li>Google Gemini</li></ul>
+    </div>
+  </dialog>
+
+  <dialog id="p-top50" aria-label="50 Projetos de IA">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>50 Projetos de IA</h2>
+      <p class="sub">Campanha de IA · Bemol Digital</p>
+      <img class="foto-premio" src="img/premio-top50.png" alt="Premiação 50 Projetos de IA da Bemol" loading="lazy">
+      <h4>Sobre</h4>
+      <p>A campanha de IA da Bemol reuniu cerca de 200 projetos voltados ao uso de inteligência artificial na empresa. Desses, 50 foram selecionados como destaques por potencial de impacto, viabilidade e originalidade. Participei de 7 dos projetos que chegaram ao top 50 e foram premiados.</p>
+    </div>
+  </dialog>
+
+  <dialog id="p-top10" aria-label="Top 10 Projetos de IA">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>Top 10 Projetos de IA</h2>
+      <p class="sub">9º lugar · Agente de Suporte N3 · Bemol Digital</p>
+      <img class="foto-premio" src="img/premio-top10.png" alt="Premiação Top 10 Projetos de IA da Bemol" loading="lazy">
+      <h4>O projeto</h4>
+      <p>Um agente chatbot que ajuda os colaboradores internos a entender os processos e as regras de negócio da empresa. O objetivo é suavizar a curva de aprendizado sobre os processos internos e auxiliar na resolução de problemas (chamados).</p>
+    </div>
+  </dialog>
+
+  <dialog id="p-bemolthon" aria-label="Bemolthon">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>Bemolthon</h2>
+      <p class="sub">2º Lugar e Menção Honrosa · hackathon da Bemol Digital</p>
+      <img class="foto-premio" src="img/premio-bemolthon-medalhas.png" alt="Medalhas do Bemolthon: 2º Lugar e Menção Honrosa" loading="lazy">
+      <h4>Sobre</h4>
+      <p>Um projeto que automatiza a criação de casos na plataforma de atendimento ao cliente (Salesforce). Ele recebeu duas premiações: 2º Lugar e Menção Honrosa. Foram dias de dedicação em equipe, e o resultado veio como reconhecimento do esforço de todos.</p>
+    </div>
+  </dialog>
+
+  <dialog id="p-ranger" aria-label="Primeira Double Star Ranger">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>Primeira Double Star Ranger</h2>
+      <p class="sub">Salesforce Trailhead · Bemol Digital</p>
+      <img class="foto-premio" src="img/premio-trailblazer.png" alt="Thaís com a jaqueta de Trailblazer" loading="lazy">
+      <h4>Sobre</h4>
+      <p>Fui a primeira Ranger e a primeira Double Star Ranger da Bemol Digital. A empresa reconheceu a conquista com a jaqueta de Trailblazer.</p>
+    </div>
+  </dialog>
+
+  <script>
+    // filtros
+    var filtros = document.querySelectorAll('.filtro');
+    var cartoes = document.querySelectorAll('.cartao[data-cat]');
+    var todosCartoes = document.querySelectorAll('.cartao');
+    filtros.forEach(function (f) {
+      f.addEventListener('click', function () {
+        filtros.forEach(function (x) { x.setAttribute('aria-pressed', x === f ? 'true' : 'false'); });
+        var cat = f.dataset.filtro;
+        cartoes.forEach(function (c) { c.hidden = !(cat === 'todos' || c.dataset.cat === cat); });
+      });
+    });
+
+    // painéis
+    todosCartoes.forEach(function (c) {
+      c.addEventListener('click', function () {
+        var d = document.getElementById('p-' + c.dataset.abrir);
+        if (d && d.showModal) d.showModal();
+      });
+      c.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); }
+      });
+    });
+    document.querySelectorAll('dialog').forEach(function (d) {
+      d.querySelector('[data-fechar]').addEventListener('click', function () { d.close(); });
+      d.addEventListener('click', function (e) { if (e.target === d) d.close(); }); // clique fora fecha
+    });
+
+    // jogo: só carrega ao clicar em "Jogar"; ao fechar o painel, descarrega (para o som)
+    var jogo = document.getElementById('jogo');
+    var frame = jogo.querySelector('iframe');
+    document.getElementById('jogar').addEventListener('click', function () {
+      frame.src = 'jogo/index.html';
+      jogo.classList.add('ativo');
+      frame.focus();
+    });
+    document.getElementById('p-hollowcity').addEventListener('close', function () {
+      frame.removeAttribute('src');
+      jogo.classList.remove('ativo');
+    });
+  </script>
+</body>
+</html>

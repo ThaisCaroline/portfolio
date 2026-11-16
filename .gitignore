@@ -1,0 +1,5 @@
+HANDOFF.txt
+*.env
+.env*
+Thumbs.db
+desktop.ini
