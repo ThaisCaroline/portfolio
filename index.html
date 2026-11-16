@@ -263,13 +263,6 @@
     <main class="conteudo" id="projetos">
       <h2>Projetos</h2>
 
-      <div class="filtros" role="group" aria-label="Filtrar projetos">
-        <button class="filtro" data-filtro="todos" aria-pressed="true">Todos</button>
-        <button class="filtro" data-filtro="app" aria-pressed="false">Apps</button>
-        <button class="filtro" data-filtro="jogo" aria-pressed="false">Jogos</button>
-        <button class="filtro" data-filtro="ia" aria-pressed="false">IA</button>
-      </div>
-
       <div class="grade">
         <article tabindex="0" role="button" class="cartao cp" data-abrir="cuidadopet" data-cat="app">
           <img class="capa" src="img/cover-cuidadopet.webp" alt="" loading="lazy">
@@ -300,6 +293,17 @@
             <h3>Estúdio de Histórias</h3>
             <p>Transforma cenas escritas em vídeos verticais narrados, com imagens e voz geradas por IA.</p>
             <ul class="pilulas pequeno"><li>Python</li><li>Streamlit</li><li>Gemini</li><li>FFmpeg</li></ul>
+            <span class="ver">Ver detalhes →</span>
+          </span>
+        </article>
+
+        <article tabindex="0" role="button" class="cartao" data-abrir="instagram">
+          <img class="capa" src="img/cover-instagram.jpg" alt="" loading="lazy">
+          <span class="corpo">
+            <span class="tag">Conteúdo · Instagram</span>
+            <h3>CuidadoPet no Instagram</h3>
+            <p>Histórias em vídeo e divulgação do app, feitas com o Estúdio de Histórias.</p>
+            <ul class="pilulas pequeno"><li>Instagram</li><li>CapCut</li><li>Gemini</li></ul>
             <span class="ver">Ver detalhes →</span>
           </span>
         </article>
@@ -504,6 +508,30 @@
     </div>
   </dialog>
 
+  <dialog id="p-instagram" aria-label="CuidadoPet no Instagram">
+    <button class="fechar" data-fechar>Fechar ✕</button>
+    <div class="painel">
+      <h2>CuidadoPet no Instagram</h2>
+      <p class="sub">Perfil @cuidadopet_app · histórias em vídeo e divulgação do app</p>
+      <h4>O que faz</h4>
+      <p>Além do app, produzo conteúdo para o perfil do CuidadoPet no Instagram: histórias em vídeo e divulgação do aplicativo, para conversar com tutores.</p>
+      <p>Os vídeos nascem no Estúdio de Histórias: eu escrevo as cenas e o app cuida das imagens e da narração com IA, juntando tudo num vídeo vertical. Depois finalizo a edição no CapCut, com o apoio do Gemini e da Meta AI na criação.</p>
+      <h4>Destaques</h4>
+      <ul class="lista">
+        <li>Vídeos feitos com o Estúdio de Histórias</li>
+        <li>Divulgação do CuidadoPet</li>
+        <li>Histórias de pets em vídeo</li>
+      </ul>
+      <h4>Perfil</h4>
+      <img class="foto-premio" src="img/instagram-perfil.jpg" alt="Perfil do CuidadoPet no Instagram" loading="lazy">
+      <div class="botoes">
+        <a class="botao" href="https://www.instagram.com/cuidadopet_app/" target="_blank" rel="noopener">Abrir no Instagram</a>
+      </div>
+      <h4>Tecnologias</h4>
+      <ul class="pilulas"><li>Estúdio de Histórias</li><li>CapCut</li><li>Google Gemini</li><li>Meta AI</li></ul>
+    </div>
+  </dialog>
+
   <dialog id="p-top50" aria-label="50 Projetos de IA">
     <button class="fechar" data-fechar>Fechar ✕</button>
     <div class="painel">
@@ -557,19 +585,8 @@
   </dialog>
 
   <script>
-    // filtros
-    var filtros = document.querySelectorAll('.filtro');
-    var cartoes = document.querySelectorAll('.cartao[data-cat]');
-    var todosCartoes = document.querySelectorAll('.cartao');
-    filtros.forEach(function (f) {
-      f.addEventListener('click', function () {
-        filtros.forEach(function (x) { x.setAttribute('aria-pressed', x === f ? 'true' : 'false'); });
-        var cat = f.dataset.filtro;
-        cartoes.forEach(function (c) { c.hidden = !(cat === 'todos' || c.dataset.cat === cat); });
-      });
-    });
-
     // painéis
+    var todosCartoes = document.querySelectorAll('.cartao');
     todosCartoes.forEach(function (c) {
       c.addEventListener('click', function () {
         var d = document.getElementById('p-' + c.dataset.abrir);
@@ -626,7 +643,6 @@
       'Trabalho com dados, automação e apps. Na Bemol Digital desenvolvo integrações e automações de marketing com Salesforce, Python e Databricks. Fora do trabalho, criei o CuidadoPet, meu primeiro app Android na Play Store, e o Hollow City, um jogo que você pode jogar aqui na página.':
         `I work with data, automation and apps. At Bemol Digital I build marketing integrations and automations with Salesforce, Python and Databricks. Outside work, I created CuidadoPet, my first Android app on the Play Store, and Hollow City, a game you can play right here on the page.`,
       // projetos
-      'Filtrar projetos': `Filter projects`, 'Todos': `All`, 'Jogos': `Games`, 'IA': `AI`,
       'App Android': `Android app`,
       'Rotina de saúde do pet no celular: remédios, vacinas, refeições e água. Publicado na Play Store.': `Your pet's health routine on your phone: medication, vaccines, meals and water. Published on the Play Store.`,
       'Ver detalhes →': `See details →`,
@@ -636,6 +652,21 @@
       'IA · vídeo': `AI · video`,
       'Estúdio de Histórias': `Story Studio`,
       'Transforma cenas escritas em vídeos verticais narrados, com imagens e voz geradas por IA.': `Turns written scenes into narrated vertical videos, with AI-generated images and voice.`,
+      // Instagram do CuidadoPet
+      'Conteúdo · Instagram': `Content · Instagram`,
+      'CuidadoPet no Instagram': `CuidadoPet on Instagram`,
+      'Histórias em vídeo e divulgação do app, feitas com o Estúdio de Histórias.': `Video stories and app promotion, made with Story Studio.`,
+      'Perfil @cuidadopet_app · histórias em vídeo e divulgação do app': `Profile @cuidadopet_app · video stories and app promotion`,
+      'Além do app, produzo conteúdo para o perfil do CuidadoPet no Instagram: histórias em vídeo e divulgação do aplicativo, para conversar com tutores.':
+        `Besides the app, I create content for CuidadoPet's Instagram profile: video stories and app promotion, to connect with pet owners.`,
+      'Os vídeos nascem no Estúdio de Histórias: eu escrevo as cenas e o app cuida das imagens e da narração com IA, juntando tudo num vídeo vertical. Depois finalizo a edição no CapCut, com o apoio do Gemini e da Meta AI na criação.':
+        `The videos are born in Story Studio: I write the scenes and the app handles the images and narration with AI, putting everything together in a vertical video. Then I finish the editing in CapCut, with the help of Gemini and Meta AI in the creation.`,
+      'Vídeos feitos com o Estúdio de Histórias': `Videos made with Story Studio`,
+      'Divulgação do CuidadoPet': `CuidadoPet promotion`,
+      'Histórias de pets em vídeo': `Pet stories on video`,
+      'Perfil': `Profile`,
+      'Perfil do CuidadoPet no Instagram': `CuidadoPet's Instagram profile`,
+      'Abrir no Instagram': `Open on Instagram`,
       // premiações (cartões)
       '50 Projetos de IA': `50 AI Projects`,
       '7 projetos premiados entre cerca de 200 da campanha de IA da empresa.': `7 awarded projects out of about 200 in the company's AI campaign.`,
