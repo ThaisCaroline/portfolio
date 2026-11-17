@@ -228,7 +228,7 @@
     .bloco li { padding:6px 0; border-bottom:1px solid var(--linha); color:#c6cfdb; }
     .bloco li:last-child { border-bottom:0; }
     .bloco li small { display:block; color:var(--suave); }
-    footer { margin-top:64px; padding-top:20px; border-top:1px solid var(--linha); color:var(--suave); font-size:.88rem; }
+    footer { margin-top:64px; padding-top:20px; border-top:1px solid var(--linha); color:var(--suave); font-size:.88rem; text-align:center; }
 
     @media (max-width:900px) {
       .painel { padding:20px 18px 26px; }
@@ -269,8 +269,8 @@
       </div>
       <p class="cargo">Software Engineer · Salesforce · Marketing Cloud</p>
       <p class="sobre">
-        Sou Software Engineer em Manaus e gosto de transformar problemas reais em coisas que
-        funcionam. Na Bemol Digital, automatizo processos e jornadas com Salesforce (Marketing
+        Sou Software Engineer em Manaus. Trabalho com dados, automação e apps, o que me move é
+        ver uma ideia virar algo que as pessoas realmente usam. Na Bemol Digital, automatizo processos e jornadas com Salesforce (Marketing
         e Service Cloud), Python e Databricks; já participei de diversos projetos de IA premiados
         na empresa. Faço especialização em Arquitetura de Soluções Digitais (PUC Minas). Fora do expediente,
         crio o que tenho vontade de ver existir: o CuidadoPet, na Play Store; o Hollow City,
@@ -486,7 +486,7 @@
       <p class="sub">Jogo 2D de ação em pixel art · jogável no navegador</p>
       <h4>O jogo</h4>
       <p>O Hollow City nasceu para uma feira de inglês e foi a minha primeira aventura no desenvolvimento de jogos. Confesso que foi muito divertido criá-lo.</p>
-      <p>Na história, controlamos um detetive que avança por Hollow City, uma cidade dominada por monstros. Sua missão é libertar não só a cidade, mas principalmente a esposa, que foi levada de casa.</p>
+      <p>Na história, controlamos um detetive que avança por Hollow City, uma cidade dominada por monstros. Sua missão é libertar não só a cidade, mas principalmente sua esposa, que foi levada de casa.</p>
       <p>A aventura evolui a cada fase: o detetive fica mais forte depois de cada chefe e, quando a vida está quase no fim, ativa o "modo virada", que aumenta a sua força. Os monstros também têm peculiaridades próprias, para que cada fase traga um desafio diferente e instigante.</p>
       <p>Há ainda um bestiário que conta um pouco da lore do jogo.</p>
       <p>Atualmente estou trabalhando para disponibilizá-lo como app gratuito na Play Store.</p>
@@ -625,7 +625,31 @@
     <p class="dica lb-cont" id="lb-cont"></p>
   </dialog>
 
+  <!-- Estatísticas anônimas (GoatCounter): sem cookies e sem dados pessoais. Painel: https://thaiscarolyne.goatcounter.com -->
+  <script data-goatcounter="https://thaiscarolyne.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
   <script>
+    // eventos de clique (contados no GoatCounter; não faz nada se o script dele não carregar, ex.: bloqueador de anúncios)
+    function evento(nome) {
+      try {
+        if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: nome, title: nome, event: true });
+      } catch (e) {}
+    }
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-abrir], #jogar, #copiar-email, .idioma button, a[href]');
+      if (!t) return;
+      if (t.dataset.abrir) return evento('abrir-' + t.dataset.abrir);
+      if (t.id === 'jogar') return evento('jogar-hollow-city');
+      if (t.id === 'copiar-email') return evento('copiar-email');
+      if (t.dataset.lang) return evento('idioma-' + t.dataset.lang);
+      var h = t.getAttribute('href') || '';
+      if (h.indexOf('instagram.com') > -1) return evento('link-instagram');
+      if (h.indexOf('play.google.com') > -1) return evento('link-play-store');
+      if (h.indexOf('linkedin.com') > -1) return evento('link-linkedin');
+      if (h.indexOf('salesforce.com') > -1) return evento('link-trailhead');
+      if (h === '#contato') return evento('ir-para-contato');
+    });
+
     // painéis
     var todosCartoes = document.querySelectorAll('.cartao');
     todosCartoes.forEach(function (c) {
@@ -681,8 +705,8 @@
       // cabeçalho e lateral
       'Projetos': `Projects`, 'Premiações': `Awards`, 'Formação': `Education`, 'Contato': `Contact`, 'Idioma': `Language`,
       'Foto de Thaís Carolyne': `Photo of Thaís Carolyne`,
-      'Sou Software Engineer em Manaus e gosto de transformar problemas reais em coisas que funcionam. Na Bemol Digital, automatizo processos e jornadas com Salesforce (Marketing e Service Cloud), Python e Databricks; já participei de diversos projetos de IA premiados na empresa. Faço especialização em Arquitetura de Soluções Digitais (PUC Minas). Fora do expediente, crio o que tenho vontade de ver existir: o CuidadoPet, na Play Store; o Hollow City, um jogo que você pode jogar aqui; o Estúdio de Histórias, que transforma texto em vídeo com IA.':
-        `I am a Software Engineer in Manaus who likes turning real problems into things that work. At Bemol Digital, I automate processes and journeys with Salesforce (Marketing and Service Cloud), Python and Databricks; I have already taken part in several award-winning AI projects at the company. I am pursuing a specialization in Digital Solutions Architecture (PUC Minas). Outside work hours, I create what I want to see exist: CuidadoPet, on the Play Store; Hollow City, a game you can play right here; Story Studio, which turns text into video with AI.`,
+      'Sou Software Engineer em Manaus. Trabalho com dados, automação e apps, o que me move é ver uma ideia virar algo que as pessoas realmente usam. Na Bemol Digital, automatizo processos e jornadas com Salesforce (Marketing e Service Cloud), Python e Databricks; já participei de diversos projetos de IA premiados na empresa. Faço especialização em Arquitetura de Soluções Digitais (PUC Minas). Fora do expediente, crio o que tenho vontade de ver existir: o CuidadoPet, na Play Store; o Hollow City, um jogo que você pode jogar aqui; o Estúdio de Histórias, que transforma texto em vídeo com IA.':
+        `I am a Software Engineer in Manaus. I work with data, automation and apps, what moves me is seeing an idea become something people actually use. At Bemol Digital, I automate processes and journeys with Salesforce (Marketing and Service Cloud), Python and Databricks; I have already taken part in several award-winning AI projects at the company. I am pursuing a specialization in Digital Solutions Architecture (PUC Minas). Outside work hours, I create what I want to see exist: CuidadoPet, on the Play Store; Hollow City, a game you can play right here; Story Studio, which turns text into video with AI.`,
       // projetos
       'App Android': `Android app`,
       'Rotina de saúde do pet no celular: remédios, vacinas, refeições e água. Publicado na Play Store.': `Your pet's health routine on your phone: medication, vaccines, meals and water. Published on the Play Store.`,
@@ -752,7 +776,7 @@
       'O jogo': `The game`,
       'O Hollow City nasceu para uma feira de inglês e foi a minha primeira aventura no desenvolvimento de jogos. Confesso que foi muito divertido criá-lo.':
         `Hollow City was born for an English fair and was my first adventure in game development. I confess it was a lot of fun to create.`,
-      'Na história, controlamos um detetive que avança por Hollow City, uma cidade dominada por monstros. Sua missão é libertar não só a cidade, mas principalmente a esposa, que foi levada de casa.':
+      'Na história, controlamos um detetive que avança por Hollow City, uma cidade dominada por monstros. Sua missão é libertar não só a cidade, mas principalmente sua esposa, que foi levada de casa.':
         `In the story, we control a detective moving through Hollow City, a city taken over by monsters. His mission is to free not only the city but, above all, his wife, who was taken from their home.`,
       'A aventura evolui a cada fase: o detetive fica mais forte depois de cada chefe e, quando a vida está quase no fim, ativa o "modo virada", que aumenta a sua força. Os monstros também têm peculiaridades próprias, para que cada fase traga um desafio diferente e instigante.':
         `The adventure evolves with each stage: the detective gets stronger after every boss and, when his health is almost gone, he activates the "comeback mode", which boosts his strength. The monsters also have their own quirks, so each stage brings a different and intriguing challenge.`,
